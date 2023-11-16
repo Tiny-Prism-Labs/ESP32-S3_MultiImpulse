@@ -1,20 +1,24 @@
-# Edge Impulse Example: standalone inferencing (Espressif ESP32)
+# Multi Impulse Example on Xiao ESP32 S3 Sense
 
-This repository runs an exported impulse on the Espressif ESP32. See the documentation at [Running your impulse locally](https://docs.edgeimpulse.com/docs/running-your-impulse-locally-1).
+This is port of [example-standalone-inferencing-multi-impulse-arduino-esp32](https://github.com/edgeimpulse/example-standalone-inferencing-multi-impulse-arduino-esp32) by Edge Impulse to Xiao ESP32-S3 Sense using ESP-IDF
 
 ## Requirements
 
 ### Hardware
 
-* [ESP-EYE](https://www.espressif.com/en/products/devkits/esp-eye/overview).
+* [XIAO ESP32S3 Sense](https://www.seeedstudio.com/XIAO-ESP32S3-Sense-p-5639.html).
 
-While the script is mainly tested with ESP-EYE, other ESP32-based development boards will work too.
+While the script is mainly tested with XIAO ESP32S3 Sense, other ESP32-based development boards will work too with changes to pins of the camera and other code changes.
 
 ### Software
 
 * [Edge Impulse CLI](https://docs.edgeimpulse.com/docs/cli-installation).
 
 * [ESP IDF 4.4](https://docs.espressif.com/projects/esp-idf/en/v4.4/esp32/get-started/index.html).
+
+I personally use dockerized version of ESP-IDF as versions are much easier to manage which I on different versions of ESP-IDF
+
+* [ESP IDF 4.4 Docker](https://docs.espressif.com/projects/esp-idf/en/release-v4.4/esp32s3/api-guides/tools/idf-docker-image.html)
 
 
 ## Building the application
@@ -24,42 +28,58 @@ While the script is mainly tested with ESP-EYE, other ESP32-based development bo
 Unzip the deployed `C++ library` from your Edge Impulse project and copy only the folders to the root directory of this repository:
 
    ```
-   example-standalone-inferencing-espressif-esp32/
-   ├─ edge-impulse-sdk
-   ├─ model-parameters
-   ├─ main
-   ├─ tflite-model
-   ├─ .gitignore
-   ├─ CMakeLists.txt
-   ├─ LICENSE
-   ├─ README.md
-   ├─ sdkconfig
-   ├─ sdkconfig.old
-   └─ partitions.csv   
-   ```
+├── CMakeLists.txt
+├── edge-impulse-sdk
+│   ├── classifier
+│   ├── cmake
+│   ├── CMSIS
+│   ├── create-arduino-library.sh
+│   ├── dsp
+│   ├── LICENSE
+│   ├── LICENSE-apache-2.0.txt
+│   ├── porting
+│   ├── README.md
+│   ├── sources.txt
+│   ├── tensorflow
+│   └── third_party
+├── LICENSE
+├── main
+│   ├── CMakeLists.txt
+│   └── main.cpp
+├── model-parameters
+│   ├── model_metadata.h
+│   └── model_variables.h
+├── README.md
+├── sdkconfig
+└── tflite-model
+    ├── trained_model_fomo_compiled.cpp
+    ├── trained_model_fomo_compiled.h
+    ├── trained_model_mic_compiled.cpp
+    ├── trained_model_mic_compiled.h
+    ├── trained_model_ops_define.h
+    └── trained_model_ops_fomo_define.h
 
-### Compile
+12 directories, 19 files
+```
 
-1. Initialize ESP IDF:
+
+
+### Build Flash Monitor
+
+1. Open the project in Docker:
    ```bash
-   get_idf
+   docker run --privileged --rm -v $PWD:/project -w /project -it espressif/idf:release-v4.4
    ```
 2. Compile:
    ```bash
-   idf.py build
+   idf.py build flash monitor
    ```
 
-### Flash
+### Output
 
-Connect the ESP32 board to your computer.
+In due time
 
-Run:
-   ```bash
-   idf.py -p /dev/ttyUSB0 flash monitor
-   ```
 
-Where ```/dev/ttyUSB0``` needs to be changed to actual port where ESP32 is connected on your system.
+## References
 
-### Serial connection
-
-Use screen, minicom or Serial monitor in Arduino IDE to set up a serial connection over USB. The following UART settings are used: 115200 baud, 8N1.
+* [Multi Impulse Docs](https://docs.edgeimpulse.com/docs/tutorials/advanced-inferencing/multi-impulse)
