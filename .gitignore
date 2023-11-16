@@ -1,4 +1,8 @@
 build/
 *.DS_Store
 .vscode/
+sdkconfig
+sdkconfig.old
+dependencies.lock
+managed_components
 
