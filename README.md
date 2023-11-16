@@ -25,7 +25,7 @@ I personally use dockerized version of ESP-IDF as versions are much easier to ma
 
 ### Get the Edge Impulse SDK
 
-Unzip the deployed `C++ library` from your Edge Impulse project and copy only the folders to the root directory of this repository:
+The directory structure looks like this
 
    ```
 ├── CMakeLists.txt
